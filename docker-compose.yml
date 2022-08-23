@@ -1,0 +1,25 @@
+version: '3.3'
+
+services: 
+  database:
+    build: ./mysql
+    restart: always
+    env_file:
+      - ./config/.env
+    ports: 
+      - "3306:3306"
+    networks:
+      - dockercompose
+
+  backend: 
+    depends_on:
+      - database
+    build: ./node
+    ports:
+      - "3001:3001"
+    networks:
+      - dockercompose
+
+networks:
+  dockercompose:
+
